@@ -65,7 +65,7 @@ def read_and_write():
             for x in f1:
                 if x.startswith("COMIENZO_PEDIDO"):
                     idP +=1
-                    print("ID_Pedido= ",idP)
+                    print("ID_Pedido = ",idP)
                 if x.__contains__("/"):
                     separa = x.split(";")
                     nombre = separa[0]
