@@ -17,65 +17,53 @@ def read_file(filepath="pedidos1.pz"):
         print("ERRROR \n¡¡ El archivo no existe !!")
     return
 
-def read_and_write():
-    # Para leer los archivos
-    # create_tables()
-    # conection = create_connection()
-    c1 = CONNECTION.cursor()
-    idP = 0
-    i = 1
+def fixLine(line):
+    line = line.lower()
+    line = line.replace('\n','')
+    line = line.replace('á','a')
+    line = line.replace('é','e')
+    line = line.replace('í','i')
+    line = line.replace('ó','o')
+    line = line.replace('ú','u')
+    line = line.replace('ñ','n')
+    return line
 
-    t = os.path.isfile("pedidos1.pz")
-    if (t == True):
-        with open("pedidos1.pz", "r") as f:
+def procesar(pedidoPath='pedidos1.pz'):
+    ''' Para procesar el archivo de los pedidos '''
+    idPedido = 0
+    line = 0
+    t = os.path.isfile(pedidoPath)
+    if t == True:
+        with open(pedidoPath, mode="r", encoding="utf-8") as f:
             f1 = f.readlines()
             for x in f1:
-                if x.startswith("COMIENZO_PEDIDO"):
-                    idP +=1
-                    print("ID_Pedido = ",idP)
-                if x.__contains__("/"):
+                x = fixLine(x)
+                # if x.startswith("COMIENZO_PEDIDO") or x.startswith("FIN_PEDIDO"):
+                if x.startswith("comienzo_pedido") or x.startswith("fin_pedido"):
+                    ''' Reiniciar los contadores al comienzo del pedido '''
+                    line = 1
+                elif line == 1:
+                    ''' La primera linea es nuestra informacion del cliente y la fecha del pedido '''
                     separa = x.split(";")
-                    nombre = separa[0]
-                    fecha = separa[1]
-                    print("Nombre cliente =", nombre)
-                    print("Fecha pedido =", fecha.strip())
-                if (x.startswith("personal") or x.startswith("familiar") or x.startswith("mediana")):
-                    if x.__contains__(";"):
-                        ingr = x.split(";")
-                        tamano = ingr[0]
-                        print("Tamano = ", tamano)
-                        if (tamano == "personal"):
-                            costo = 10
-                            print("Costo x tamano = ", costo)
-                            for ingrendiente in ingr[1:]:
-                                # ingrendiente = ingr[i]
-                                print("Ingrediente = ", ingrendiente.strip())
-                        if (tamano == "mediana"):
-                            costo = 15
-                            print("Costo x tamano = ", costo)
-                            for ingrendiente in ingr[1:]:
-                                # ingrendiente = ingr[i]
-                                print("Ingrediente = ", ingrendiente.strip())
-                        if (tamano == "familiar"):
-                            costo = 20
-                            print("Costo x tamano = ", costo)
-                            for ingrendiente in ingr[1:]:
-                                # ingrendiente = ingr[i]
-                                print("Ingrediente = ", ingrendiente.strip())
-                    else: 
-                        tamano = x[0:].strip()
-                        print("Tamano =", tamano)
-                        if (tamano == "personal"):
-                            costo = 10
-                            print("Costo x tamano = ", costo)
-                        if (tamano == "mediana"):
-                            costo = 15
-                            print("Costo x tamano = ", costo)
-                        if (tamano == "familiar"):
-                            costo = 20
-                            print("Costo x tamano = ", costo)
-
-                if x.startswith("FIN_PEDIDO"):
-                    print("FINNNNN")
+                    nombre = separa[0].strip()
+                    fecha = separa[1].strip()
+                    if nombre == '' or fecha == '':
+                        print('"Nombre" y "Fecha" son los parametros requeridos para crear el Pedido.')
+                        idPedido = 0
+                        line = 0
+                    else:
+                        # idPedido = addPedido(nombre, fecha)
+                        idPedido += 1
+                        line += 1
+                elif line > 1:
+                    if idPedido != 0:
+                        print(f"Pedido #{idPedido}")
+                        pizza = x.split(";")
+                        tamano = pizza[0].strip()
+                        print("Tamano: ", tamano)
+                        print("Ingredientes: ", str(pizza[1:]))
+                        # if addPizza(idPedido, tamano, pizza[1:]) == False:
+                        #     print('la Pizza no pudo ser agregada')
+                        line += 1
     else:
-        print("ERRROR \n¡¡ El archivo no existe !!")
+        print(f"ERRROR \n¡¡ El archivo {pedidoPath} no existe !!")
