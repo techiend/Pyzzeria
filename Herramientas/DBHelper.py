@@ -54,7 +54,11 @@ def create_tables():
 def lastID(table):
     cur = CONNECTION.cursor()
     last = cur.execute(f"SELECT MAX(id) FROM {table}").fetchone()
-    return last[0] + 1
+    if last.__contains__("None"):
+        last = 1
+    else:
+        last = last[0] + 1
+    return last
 
 def addPedido(nombreCliente, fechaPedido):
     c1 = CONNECTION.cursor()
