@@ -8,9 +8,11 @@ if __name__ == "__main__":
     cur = CONNECTION.cursor()
     cur.execute('''SELECT * FROM pedido''')
     rows = cur.fetchall()
-    print("ID","F_Pedido", " N_Cliente")
+    print("--------------------------")
+    print("ID  |","F_Pedido |", "N_Cliente")
+    print("--------------------------")
     for row in rows:
-        print("{} {} {}".format(row[0], row[1], row[2]))
+        print("{} {} {}".format(row[0], "   "+row[1], row[2]))
     print('\n')
     
     
