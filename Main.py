@@ -72,4 +72,6 @@ def printTables():
 if __name__ == "__main__":
     # print("MAIN")
     procesar('pedidos1.pz')
+    procesar('pedidos2.pz')
+    procesar('pedidos3.pz')
        

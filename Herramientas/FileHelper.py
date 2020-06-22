@@ -64,5 +64,6 @@ def procesar(pedidoPath='pedidos1.pz'):
                         # print("Ingredientes: ", str(pizza[1:]))
                         addPizza(idPedido,tamano,pizza[1:])
                         line += 1
+            print(f"Archivo {pedidoPath} procesado.")
     else:
         print(f"ERRROR \n¡¡ El archivo {pedidoPath} no existe !!")
