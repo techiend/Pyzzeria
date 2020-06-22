@@ -1,5 +1,5 @@
 import os
-from .DBHelper import CONNECTION
+from .DBHelper import CONNECTION, addPedido
 
 def read_file(filepath="pedidos1.pz"):
     # Para leer los archivos
@@ -52,8 +52,8 @@ def procesar(pedidoPath='pedidos1.pz'):
                         idPedido = 0
                         line = 0
                     else:
-                        # idPedido = addPedido(nombre, fecha)
-                        idPedido += 1
+                        idPedido = addPedido(nombre, fecha)
+                        # idPedido += 1
                         line += 1
                 elif line > 1:
                     if idPedido != 0:
