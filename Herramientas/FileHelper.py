@@ -1,5 +1,5 @@
 import os
-from .DBHelper import CONNECTION, addPedido
+from .DBHelper import CONNECTION, addPedido, addPizza
 
 def read_file(filepath="pedidos1.pz"):
     # Para leer los archivos
@@ -57,13 +57,13 @@ def procesar(pedidoPath='pedidos1.pz'):
                         line += 1
                 elif line > 1:
                     if idPedido != 0:
-                        print(f"Pedido #{idPedido}")
+                        # print(f"Pedido #{idPedido}")
                         pizza = x.split(";")
                         tamano = pizza[0].strip()
-                        print("Tamano: ", tamano)
-                        print("Ingredientes: ", str(pizza[1:]))
-                        # if addPizza(idPedido, tamano, pizza[1:]) == False:
-                        #     print('la Pizza no pudo ser agregada')
+                        # print("Tamano: ", tamano)
+                        # print("Ingredientes: ", str(pizza[1:]))
+                        addPizza(idPedido,tamano,pizza[1:])
                         line += 1
+            print(f"Archivo {pedidoPath} procesado.")
     else:
         print(f"ERRROR \n¡¡ El archivo {pedidoPath} no existe !!")
