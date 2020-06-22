@@ -2,9 +2,7 @@ from Herramientas import *
 
 if __name__ == "__main__":
     # print("MAIN")
-    read_and_write()
-    print('\n')
-    addPedido("Maria Perez","03/02/2020")
+    procesar('pedidos1.pz')
     cur = CONNECTION.cursor()
     cur.execute('''SELECT * FROM pedido''')
     rows = cur.fetchall()
