@@ -1,4 +1,5 @@
 import  sqlite3
+import sqlite3 as lite
 from sqlite3 import Error
 
 def create_connection(database_name="pyzzeria.sql"):
@@ -18,19 +19,19 @@ def create_connection(database_name="pyzzeria.sql"):
 def create_tables():
     c1 = CONNECTION.cursor()
     # Tabla Pedido
-    c1.execute('''CREATE TABLE IF NOT EXISTS pedido (id_pedido INT PRIMARY KEY NOT NULL,
+    c1.execute('''CREATE TABLE IF NOT EXISTS pedido (id INT PRIMARY KEY NOT NULL,
                                         fecha_pedido TEXT NOT NULL,
                                         nombrecliente_pedido TEXT NOT NULL)''')
     # Tabla Tamaño
-    c1.execute('''CREATE TABLE IF NOT EXISTS tamano (id_tamano INT PRIMARY KEY NOT NULL,
+    c1.execute('''CREATE TABLE IF NOT EXISTS tamano (id INT PRIMARY KEY NOT NULL,
                                         nombre_tamano TEXT NOT NULL,
                                         costo_tamano REAL NOT NULL)''')
     # Tabla Ingrediente
-    c1.execute('''CREATE TABLE IF NOT EXISTS ingrediente (id_ingrediente INT PRIMARY KEY NOT NULL,
+    c1.execute('''CREATE TABLE IF NOT EXISTS ingrediente (id INT PRIMARY KEY NOT NULL,
                                             nombre_ingrediente TEXT NOT NULL,
                                             precio_ingrediente REAL NOT NULL)''')
     # Tabla Pizza
-    c1.execute('''CREATE TABLE IF NOT EXISTS pizza (id_pizza INT PRIMARY KEY NOT NULL,
+    c1.execute('''CREATE TABLE IF NOT EXISTS pizza (id INT PRIMARY KEY NOT NULL,
                                         fk_pedido INT NOT NULL,
                                         fk_tamano INT NOT NULL,
                                         FOREIGN KEY (fk_pedido) REFERENCES pedido (id_pedido),
@@ -49,6 +50,20 @@ def create_tables():
     #     print("ID =",row[0])
     print("Tablas creadas exitosamente")
     return
+
+def lastID(table):
+    cur = CONNECTION.cursor()
+    last = cur.execute(f"SELECT MAX(id) FROM {table}").fetchone()
+    return last[0] + 1
+
+def addPedido(nombreCliente, fechaPedido):
+    c1 = CONNECTION.cursor()
+    idPedido = lastID("pedido")
+    c1.execute('''INSERT INTO pedido (id, fecha_pedido, nombrecliente_pedido) 
+                                        values (?, ?, ?)''',(idPedido, fechaPedido, nombreCliente))
+    CONNECTION.commit() 
+    print("Datos del Pedido insertado exitosamente")
+    return idPedido
 
 CONNECTION = create_connection("pyzzeria.sql")
 create_tables()
