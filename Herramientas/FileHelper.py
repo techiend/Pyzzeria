@@ -1,23 +1,10 @@
 import os
 from .DBHelper import CONNECTION, addPedido, addPizza, subt_tam, subt_ing, vnt_piz, vnt_ing
 
-def read_file(filepath="pedidos1.pz"):
-    # Para leer los archivos
-    t = os.path.isfile(filepath)
-    if (t == True):
-        f = open(filepath, "r")   
-        # if f.mode == "r":
-        #     contenido = f.read()
-        #     print(contenido)
-        f1 = f.readlines()
-        for x in f1:
-            print(x)
-        f.close()
-    else:
-        print("ERRROR \n¡¡ El archivo no existe !!")
-    return
-
 def fixLine(line):
+    ''' Metodo encargado de limpiar los caracteres
+    especiales con tal de no generar un error con los
+    datos almacenados en nuestro sistema.'''
     line = line.lower()
     line = line.replace('\n','')
     line = line.replace('á','a')
@@ -29,7 +16,9 @@ def fixLine(line):
     return line
 
 def procesar(pedidoPath='pedidos1.pz'):
-    ''' Para procesar el archivo de los pedidos '''
+    ''' Este metodo se encarga de leer el archivo solicitado, por cada pedido
+    inserta un pedido en la base de datos y luego inserta las pizzas solicitadas
+    por ese pedido, una vez completado el archivo, este regresa al menu. '''
     idPedido = 0
     line = 0
     t = os.path.isfile(pedidoPath)
