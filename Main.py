@@ -74,4 +74,5 @@ if __name__ == "__main__":
     procesar('pedidos1.pz')
     procesar('pedidos2.pz')
     procesar('pedidos3.pz')
+    write_file(filepath="resumen.pz")
        
