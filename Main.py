@@ -112,7 +112,7 @@ if __name__ == "__main__":
                 cargar()
             elif (opcion == 2):
                 clearScreen()
-                print("Generar resumen.")
+                write_file(filepath="resumen.pz")
                 val = input("\n\nPresiona una tecla para continuar...")
             elif (opcion == 3):
                 printTables()
@@ -124,3 +124,4 @@ if __name__ == "__main__":
                 clearScreen()
         except ValueError:
             pass
+       

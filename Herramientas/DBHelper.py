@@ -37,13 +37,16 @@ def create_tables():
                                         FOREIGN KEY (fk_pedido) REFERENCES pedido (id),
                                         FOREIGN KEY (fk_tamano) REFERENCES tamano (id))''')
     # Tabla Tamaño_Ingrediente
-    c1.execute('''CREATE TABLE IF NOT EXISTS tamano_ingrediente (precio_ingrediente REAL NOT NULL,
+    c1.execute('''CREATE TABLE IF NOT EXISTS tamano_ingrediente (
+                                                                precio_ingrediente REAL NOT NULL,
                                                                 fk_ingrediente INT NOT NULL,
                                                                 fk_tamano INT NOT NULL,
+                                                                
                                                                 FOREIGN KEY (fk_ingrediente) REFERENCES ingrediente(id),
                                                                 FOREIGN KEY (fk_tamano) REFERENCES tamano(id))''')
     # Tabla Pizza_Ingrediente
-    c1.execute('''CREATE TABLE IF NOT EXISTS pizza_ingrediente (fk_id_pizza INT NOT NULL,
+    c1.execute('''CREATE TABLE IF NOT EXISTS pizza_ingrediente (
+                                                    fk_id_pizza INT NOT NULL,
                                                     fk_tamano_pizza INT NOT NULL,
                                                     fk_ti_tamano_ingrediente INT NOT NULL,
                                                     fk_ti_ingrediente INT NOT NULL,
@@ -79,27 +82,27 @@ def create_tables():
     # Insert de Tamaño_Ingrediente
     idTI = c1.execute('''SELECT MAX(precio_ingrediente) FROM tamano_ingrediente''').fetchone()
     if idTI[0] == None:
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (1, 1, 1.50)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (1, 2, 1.75)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (1, 3, 2.00)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (2, 1, 1.75)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (2, 2, 2.05)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (2, 3, 2.50)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (3, 1, 1.50)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (3, 2, 1.75)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (3, 3, 2.00)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (4, 1, 0.80)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (4, 2, 1.30)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (4, 3, 1.70)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (5, 1, 1.80)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (5, 2, 2.15)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (5, 3, 2.60)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (6, 1, 1.25)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (6, 2, 1.70)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (6, 3, 1.90)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (7, 1, 1.60)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (7, 2, 1.85)''')
-        c1.execute('''INSERT INTO tamano_ingrediente (fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (7, 3, 2.10)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (1, 1, 1.50)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (1, 2, 1.75)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (1, 3, 2.00)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (2, 1, 1.75)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (2, 2, 2.05)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (2, 3, 2.50)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (3, 1, 1.50)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (3, 2, 1.75)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (3, 3, 2.00)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (4, 1, 0.80)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (4, 2, 1.30)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (4, 3, 1.70)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (5, 1, 1.80)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (5, 2, 2.15)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (5, 3, 2.60)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (6, 1, 1.25)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (6, 2, 1.70)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (6, 3, 1.90)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (7, 1, 1.60)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (7, 2, 1.85)''')
+        c1.execute('''INSERT INTO tamano_ingrediente ( fk_ingrediente, fk_tamano, precio_ingrediente) VALUES (7, 3, 2.10)''')
         print("Rows (tamano_ingrediente) added successfully")
         CONNECTION.commit()
     else:
@@ -150,3 +153,55 @@ def addPizza(idPedido, tamano, ingredientes):
 
 CONNECTION = create_connection("pyzzeria.sql")
 create_tables()
+
+#Funcion que retorna las ventas totales de los tamaños
+def subt_tam():
+    cur = CONNECTION.cursor()
+    subtotal_tamano = cur.execute('''select distinct  p.fecha_pedido,(select sum(t.costo_tamano) from tamano t, pizza pi, pedido pe where pi.fk_tamano=t.id and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id )
+                                      from pedido p, pizza pi, tamano t 
+                                      where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano''').fetchall()
+    return subtotal_tamano
+
+#Funcion que retorna las ventas totales de los ingredientes
+def subt_ing():
+    cur = CONNECTION.cursor()    
+    subtotal_ingre = cur.execute('''  select distinct p.fecha_pedido, 
+                                  (select sum(t_ing.precio_ingrediente)
+                                   from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+                                   where pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+                                      t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+                                      and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido)
+
+                                    from pedido p, pizza pi, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_in, ingrediente i
+                                    where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano and t_in.fk_ingrediente= i.id and 
+                                      t_in.fk_tamano = t.id and pi.id= pi_in.fk_id_pizza and pi.fk_tamano= pi_in.fk_tamano_pizza 
+                                      and t_in.fk_ingrediente= pi_in.fk_ti_ingrediente and t_in.fk_tamano= pi_in.fk_ti_tamano_ingrediente''').fetchall()
+    return subtotal_ingre
+
+#Funcion que retorna las ventas de  tamaños con sus cantidades y montos
+def vnt_piz():
+    cur = CONNECTION.cursor()  
+    vent_piz= cur.execute('''select  p.fecha_pedido, t.nombre_tamano,count(p.id) as vendidos,
+                                (count(pi.id) * t.costo_tamano) as ganancias
+                                from pedido p, pizza pi, tamano t 
+                                where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano
+                                group by p.fecha_pedido, t.nombre_tamano  ''').fetchall()
+    return vent_piz
+
+#Funcion que retorna las ventas de los ingredientes con sus cantidades y montos
+def vnt_ing():
+    cur = CONNECTION.cursor()      
+    vent_ing= cur.execute('''SELECT pedidos_ingredientes.fecha_pedido, pedidos_ingredientes.nombre_ingrediente,
+                            sum(pedidos_ingredientes.vendidos) as vendidos,
+                            sum(pedidos_ingredientes.ganancias) as ganancias from 
+	                        (SELECT pedido.fecha_pedido, ingrediente.nombre_ingrediente, 
+	                         count(ingrediente.nombre_ingrediente) vendidos,
+	                         count(ingrediente.nombre_ingrediente) * tamano_ingrediente.precio_ingrediente ganancias
+	                        from pedido, pizza, pizza_ingrediente, tamano_ingrediente, ingrediente
+	                        where pizza.fk_pedido = pedido.id and pizza_ingrediente.fk_id_pizza = pizza.id AND
+	                        pizza_ingrediente.fk_ti_tamano_ingrediente = tamano_ingrediente.fk_tamano and 
+	                        tamano_ingrediente.fk_ingrediente = ingrediente.id and pizza_ingrediente.fk_ti_ingrediente=tamano_ingrediente.fk_ingrediente
+	                        group by pedido.fecha_pedido, tamano_ingrediente.precio_ingrediente,
+	                        ingrediente.nombre_ingrediente) as pedidos_ingredientes
+                            group by pedidos_ingredientes.fecha_pedido, pedidos_ingredientes.nombre_ingrediente ''').fetchall()
+    return vent_ing
