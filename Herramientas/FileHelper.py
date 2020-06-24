@@ -67,3 +67,98 @@ def procesar(pedidoPath='pedidos1.pz'):
             print(f"Archivo {pedidoPath} procesado.")
     else:
         print(f"ERRROR \n¡¡ El archivo {pedidoPath} no existe !!")
+
+# se crea el archivo resumen
+def write_file(filepath="resumen.pz"):
+ # se toman los datos de la base de datos 
+    cur = CONNECTION.cursor()
+    subtotal_tamano = cur.execute(f'''select distinct  p.fecha_pedido,(select sum(t.costo_tamano) from tamano t, pizza pi, pedido pe where pi.fk_tamano=t.id and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id )
+                                      from pedido p, pizza pi, tamano t 
+                                      where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano''').fetchall()
+    
+    subtotal_ingre = cur.execute(f'''  select distinct p.fecha_pedido, 
+                                  (select sum(t_ing.precio_ingrediente)
+                                   from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+                                   where pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+                                      t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+                                      and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido)
+
+                                    from pedido p, pizza pi, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_in, ingrediente i
+                                    where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano and t_in.fk_ingrediente= i.id and 
+                                      t_in.fk_tamano = t.id and pi.id= pi_in.fk_id_pizza and pi.fk_tamano= pi_in.fk_tamano_pizza 
+                                      and t_in.fk_ingrediente= pi_in.fk_ti_ingrediente and t_in.fk_tamano= pi_in.fk_ti_tamano_ingrediente''').fetchall()
+
+    vent_piz= cur.execute(f'''select distinct  p.fecha_pedido, t.nombre_tamano,
+(select count(*) from pizza pi, pedido pe where pi.fk_tamano=1 and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id),
+(select count(*) from pizza pi, pedido pe where pi.fk_tamano=2 and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id),
+(select count(*) from pizza pi, pedido pe where pi.fk_tamano=3 and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id),
+(select sum(t.costo_tamano) from tamano t, pizza pi, pedido pe where pi.fk_tamano=1 and pi.fk_tamano=t.id  and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id ),
+(select sum(t.costo_tamano) from tamano t, pizza pi, pedido pe where pi.fk_tamano=2 and pi.fk_tamano=t.id and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id ),
+(select sum(t.costo_tamano) from tamano t, pizza pi, pedido pe where pi.fk_tamano=3 and pi.fk_tamano=t.id and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id )
+from pedido p, pizza pi, tamano t 
+where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano  ''').fetchall()
+    
+    vent_ing= cur.execute(f'''select distinct p.fecha_pedido,  i.nombre_ingrediente,
+(select count(*) 
+ from pizza_ingrediente pi_ing, pizza pi, pedido pe
+ where pi_ing.fk_ti_ingrediente=1 and pe.fecha_pedido =p.fecha_pedido
+ and pi.fk_pedido=pe.id and pi_ing.fk_id_pizza=pi.id),
+(select count(*) from pizza_ingrediente pi_ing, pizza pi, pedido pe where pi_ing.fk_ti_ingrediente=2 and pe.fecha_pedido =p.fecha_pedido
+ and pi.fk_pedido=pe.id and pi_ing.fk_id_pizza=pi.id),
+(select count(*) from pizza_ingrediente pi_ing, pizza pi, pedido pe where pi_ing.fk_ti_ingrediente=3 and pe.fecha_pedido =p.fecha_pedido
+ and pi.fk_pedido=pe.id and pi_ing.fk_id_pizza=pi.id),
+(select count(*) from pizza_ingrediente pi_ing, pizza pi, pedido pe where pi_ing.fk_ti_ingrediente=4 and pe.fecha_pedido =p.fecha_pedido
+ and pi.fk_pedido=pe.id and pi_ing.fk_id_pizza=pi.id),
+(select count(*) from pizza_ingrediente pi_ing, pizza pi, pedido pe where pi_ing.fk_ti_ingrediente=5 and pe.fecha_pedido =p.fecha_pedido
+ and pi.fk_pedido=pe.id and pi_ing.fk_id_pizza=pi.id),
+(select count(*) from pizza_ingrediente pi_ing, pizza pi, pedido pe where pi_ing.fk_ti_ingrediente=6 and pe.fecha_pedido =p.fecha_pedido
+ and pi.fk_pedido=pe.id and pi_ing.fk_id_pizza=pi.id),
+(select count(*) from pizza_ingrediente pi_ing, pizza pi, pedido pe where pi_ing.fk_ti_ingrediente=7 and pe.fecha_pedido =p.fecha_pedido
+ and pi.fk_pedido=pe.id and pi_ing.fk_id_pizza=pi.id),
+
+(select sum(t_ing.precio_ingrediente)
+from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+where t_ing.fk_ingrediente= 1 and pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido),
+
+(select sum(t_ing.precio_ingrediente)
+from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+where t_ing.fk_ingrediente= 2 and pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido),
+
+(select sum(t_ing.precio_ingrediente)
+from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+where t_ing.fk_ingrediente= 3 and pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido),
+
+(select sum(t_ing.precio_ingrediente)
+from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+where t_ing.fk_ingrediente= 4 and pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido),
+
+(select sum(t_ing.precio_ingrediente)
+from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+where t_ing.fk_ingrediente= 5 and pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido),
+
+(select sum(t_ing.precio_ingrediente)
+from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+where t_ing.fk_ingrediente= 6 and pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido),
+
+(select sum(t_ing.precio_ingrediente)
+from pedido pe, pizza piz, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_ing, ingrediente i  
+where t_ing.fk_ingrediente= 7 and pe.id= piz.fk_pedido and  t.id= piz.fk_tamano and t_ing.fk_ingrediente= i.id and 
+t_ing.fk_tamano = t.id and piz.id= pi_in.fk_id_pizza and piz.fk_tamano= pi_in.fk_tamano_pizza 
+and pi_in.fk_ti_ingrediente=t_ing.fk_ingrediente and pe.fecha_pedido =p.fecha_pedido)
+
+from pedido p, pizza pi, pizza_ingrediente pi_in, tamano t, tamano_ingrediente t_in, ingrediente i
+where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano and t_in.fk_ingrediente= i.id and 
+t_in.fk_tamano = t.id and pi.id= pi_in.fk_id_pizza and pi.fk_tamano= pi_in.fk_tamano_pizza 
+and t_in.fk_ingrediente= pi_in.fk_ti_ingrediente and t_in.fk_tamano= pi_in.fk_ti_tamano_ingrediente ''').fetchall()
