@@ -21,7 +21,7 @@ def cargar():
         procesar(path)
     else:
         print(F"Lo siento, el archivo especificado no se encuentra.")
-    val = input("\n\nPresiona una tecla para continuar...")
+    val = input("\n\nPresiona enter para continuar...")
 
 if __name__ == "__main__":
     # print("MAIN")
@@ -43,13 +43,13 @@ if __name__ == "__main__":
             elif (opcion == 2):
                 clearScreen()
                 write_file(filepath="resumen.pz")
-                val = input("\n\nPresiona una tecla para continuar...")
+                val = input("\n\nPresiona enter para continuar...")
             elif (opcion == 3):
                 clearScreen()
                 printTables()
             elif (opcion == 0):
                 clearScreen()
-                input("Saliendo de Pyzzeria!\n\nPresiona una tecla para cerrar...")
+                input("Saliendo de Pyzzeria!\n\nPresiona enter para cerrar...")
                 break
             else:
                 clearScreen()

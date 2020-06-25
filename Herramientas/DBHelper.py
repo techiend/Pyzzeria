@@ -2,6 +2,7 @@ import  sqlite3
 import sqlite3 as lite
 from sqlite3 import Error
 
+''' Metodo para crear una conexion con la BD '''
 def create_connection(database_name="pyzzeria.sql"):
     #  Crear coneccion de la bd que se aloja en memoria
     conn = None
@@ -16,6 +17,9 @@ def create_connection(database_name="pyzzeria.sql"):
     print("Conexion establecida")
     return conn
 
+''' Metodo para crear las tablas de la BD , insertar los Tamaños de pizza
+    con sus respectivos precios, insertar los Ingredientes e insertar los 
+    Tamaño_Ingrediente el cual posee el precio por ingrediete '''
 def create_tables():
     c1 = CONNECTION.cursor()
     # Tabla Pedido
@@ -112,6 +116,7 @@ def create_tables():
     print("Tables created successfully")
     return
 
+''' Metodo que verifica y retorna el *ULTIMO* ID de una tabla '''
 def lastID(table):
     cur = CONNECTION.cursor()
     last = cur.execute(f"SELECT MAX(id) FROM {table}").fetchone()
@@ -121,6 +126,7 @@ def lastID(table):
         last = last[0] + 1
     return last
 
+''' Metodo que inserta un Pedido ''''
 def addPedido(nombreCliente, fechaPedido):
     c1 = CONNECTION.cursor()
     idPedido = lastID("pedido")
@@ -130,6 +136,7 @@ def addPedido(nombreCliente, fechaPedido):
     print("Datos del Pedido insertado exitosamente")
     return idPedido
 
+''' Metodo que inserta una Pizza '''
 def addPizza(idPedido, tamano, ingredientes):
     cur = CONNECTION.cursor()
     idTamano = cur.execute(f'''SELECT id FROM tamano WHERE nombre_tamano = "{tamano}" ''').fetchone()
@@ -137,18 +144,32 @@ def addPizza(idPedido, tamano, ingredientes):
     if idTamano == None:
         print("El tamaño ",tamano," no existe")
     else:
-        cur.execute('''INSERT INTO PIZZA (id, fk_pedido, fk_tamano) VALUES (?, ?, ?)''',(idPizza, idPedido, idTamano[0]))
+        cur.execute('''INSERT INTO pizza (id, fk_pedido, fk_tamano) VALUES (?, ?, ?)''',(idPizza, idPedido, idTamano[0]))
     
     for ing in ingredientes:
         idIngrediente = cur.execute(f'''SELECT id FROM ingrediente WHERE nombre_ingrediente = "{ing}" ''').fetchone()
         if idIngrediente == None:
-            print("El ingrediente ",ing," no esta disponible")
-            return 
+            print("El ingrediente ",ing," no esta disponible\n")
+            while True:
+                print("¿ Desea su pizza sin",ing,"?\n")
+                try:
+                    option = str(input("Introduce una opcion (S/N): "))
+                
+                    if (option == "s" or option == "S"):
+                        print("\n")
+                        break
+                    elif (option == "n" or option == "N"):
+                        cur.execute(f'''DELETE FROM pizza_ingrediente WHERE fk_id_pizza = {idPizza} and fk_tamano_pizza = {idTamano[0]}''')
+                        cur.execute(f'''DELETE FROM pizza WHERE id = {idPizza}''')
+                        print("\nCancelada la pizza con",ing,"\n")
+                        return
+                except ValueError:
+                    break
         else:
             cur.execute('''INSERT INTO pizza_ingrediente (fk_id_pizza, fk_tamano_pizza, fk_ti_tamano_ingrediente, fk_ti_ingrediente) 
                                         VALUES (?, ?, ?, ?)''',(idPizza, idTamano[0], idTamano[0], idIngrediente[0]))
     CONNECTION.commit() 
-    print("Pizza insertada exitosamente !")
+    print("¡ Pizza insertada exitosamente !")
 
 
 CONNECTION = create_connection("pyzzeria.sql")
@@ -220,8 +241,8 @@ def printTables():
         print("{} {} {}".format(row[0], "   "+row[1], row[2]))
     print('\n')
 
-    print("Datos de la tabla Tamano")
     '''Muestra los datos de Tamano'''
+    print("Datos de la tabla Tamano")
     cur.execute('''SELECT * FROM tamano''')
     rows = cur.fetchall()
     print("-----------------------")
@@ -231,8 +252,8 @@ def printTables():
         print("{} {} {}".format(row[0], "   "+row[1]+"  ",row[2]))
     print('\n')
 
-    print("Datos de tabla Ingrediente")
     '''Muestra los datos de Ingrediente'''
+    print("Datos de tabla Ingrediente")
     cur.execute('''SELECT * FROM ingrediente''')
     rows = cur.fetchall()
     print("-----------------------")
@@ -242,8 +263,8 @@ def printTables():
         print("{} {}".format(row[0], "   "+row[1]))
     print('\n')
     
-    print("Datos de la tabla Tamano_Ingrediente")
     '''Muestra los datos de Tamano_Ingrediente'''
+    print("Datos de la tabla Tamano_Ingrediente")
     cur.execute('''SELECT * FROM tamano_ingrediente''')
     rows = cur.fetchall()
     print("-----------------------")
@@ -253,8 +274,8 @@ def printTables():
         print("{} {} {}".format(row[0], "    "+str(row[1])+"       ",row[2]))
     print('\n')
 
-    print("Datos de la tabla Pizza")
     '''Muestra los datos de Pizza'''
+    print("Datos de la tabla Pizza")
     cur.execute('''SELECT * FROM pizza''')
     rows = cur.fetchall()
     print("------------------------------")
@@ -264,8 +285,8 @@ def printTables():
         print("{} {} {}".format(row[0], "       "+str(row[1])+"          ",str(row[2])))
     print('\n')
 
-    print("Datos de la tabla Pizza_Ingrediente")
     '''Muestra los datos de Pizza_Ingrediente'''
+    print("Datos de la tabla Pizza_Ingrediente")
     cur.execute('''SELECT * FROM pizza_ingrediente''')
     rows = cur.fetchall()
     print("-----------------------------------")
