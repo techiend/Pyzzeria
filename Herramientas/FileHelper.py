@@ -94,7 +94,7 @@ def write_file(filepath="resumen.pz"):
             resumen.write("Fecha: "+a +'\n')
             resumen.write("Venta Total: "+ str (dic_venta_t[a])+" UMs"+'\n')
             resumen.write("Ventas por pizza (sin incluir adicionales): "+'\n')
-            resumen.write('\t'+"Pizza  "+'\t'+'\t'+'\t'+'\t'+"||"+"Unidades"+'\t'+'\t'+"||"+"Mono UMs"+'\n')
+            resumen.write('\t'+"Pizza  "+'\t'+'\t'+'\t'+'\t'+"||"+"Unidades"+'\t'+'\t'+"||"+"Monto UMs"+'\n')
             
             """ciclo que por cada elemento(b) de venta tamaño se escribe en
              el archivo los tamaños que se vendieron ese dia junto con sus cantidades y montos"""
@@ -109,7 +109,7 @@ def write_file(filepath="resumen.pz"):
                        resumen.write('\t'+str(b[1]).capitalize()+'\t'+'\t'+'\t'+"||"+str(b[2])+'\t'+'\t'+'\t'+'\t'+"||"+str(b[3])+'\n')
 
             resumen.write("Ventas por Ingrediente: "+'\n')
-            resumen.write('\t'+"Ingredientes  "+'\t'+'\t'+"||"+"Unidades"+'\t'+'\t'+"||"+"Mono UMs"+'\n') 
+            resumen.write('\t'+"Ingredientes  "+'\t'+'\t'+"||"+"Unidades"+'\t'+'\t'+"||"+"Monto UMs"+'\n') 
 
             """ciclo que por cada elemento(c) de venta ingrediente se escribe en
             el archivo los ingredientes que se vendieron ese dia junto con sus cantidades y montos"""
