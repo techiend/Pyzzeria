@@ -62,18 +62,22 @@ def procesar(pedidoPath='pedidos1.pz'):
     else:
         print(f"ERRROR \n¡¡ El archivo {pedidoPath} no existe !!")
 
-# funcion para crear el archivo resumen
+'''funcion para crear el archivo resumen'''
 def write_file(filepath="resumen.pz"):
-    #llamar a las funciones de los querys para obtener los datos
-    subt_tm=subt_tam() #total de las ventas de los tamaños
-    subt_ig=subt_ing() #total de las ventas de los ingredientes
-    vt_pz=vnt_piz() #venta por tamaño con sus respectivas unidades y montos
-    vt_ig=vnt_ing() #venta por ingrediente con sus respectivas unidades y montos
+    '''llamar a las funciones de los querys para obtener los datos'''
+    '''total de las ventas de los tamaños'''
+    subt_tm=subt_tam()  
+    '''total de las ventas de los ingredientes'''
+    subt_ig=subt_ing()  
+    '''venta por tamaño con sus respectivas unidades y montos'''
+    vt_pz=vnt_piz()
+    '''venta por ingrediente con sus respectivas unidades y montos'''
+    vt_ig=vnt_ing()     
       
     dic_venta_t={}
-    #se recorre los dos arreglos para crear el diccionario de fechas y montos totales
-    #sumar sub totales para hallar venta total 
-    #x y representan los elementos de cada arreglo
+    '''se recorre los dos arreglos para crear el diccionario de fechas y montos totales
+    sumar sub totales para hallar venta total
+    x y representan los elementos de cada arreglo'''
     for x in subt_tm:
         if x[0] in dic_venta_t.keys():
             dic_venta_t[x[0]]=dic_venta_t[x[0]]+float(x[1])
@@ -86,9 +90,9 @@ def write_file(filepath="resumen.pz"):
         else:
           dic_venta_t[y[0]]=y[1]    
     
-    #creacion y llenado del archivo
+    '''creacion y llenado del archivo'''
     resumen = open("resumen.pz","w")
-    #ciclo que por cada llave (a) del diccionario se escribe en el archivo resumen
+    '''ciclo que por cada llave (a) del diccionario se escribe en el archivo resumen'''
     for a in dic_venta_t:
             resumen.write('\n'+'\n')
             resumen.write("Fecha: "+a +'\n')
@@ -100,7 +104,7 @@ def write_file(filepath="resumen.pz"):
              el archivo los tamaños que se vendieron ese dia junto con sus cantidades y montos"""
             for b in vt_pz:
                if a==b[0]:
-                   # se escribe en el archivo los tamaños, unidades y montos
+                   '''se escribe en el archivo los tamaños, unidades y montos'''
                    if str(b[1])=='mediana':
                        medi=str(b[1])+' '
                        resumen.write('\t'+medi.capitalize()+'\t'+'\t'+'\t'+"||"+str(b[2])+'\t'+'\t'+'\t'+'\t'+"||"+str(b[3])+'\n')
@@ -115,7 +119,7 @@ def write_file(filepath="resumen.pz"):
             el archivo los ingredientes que se vendieron ese dia junto con sus cantidades y montos"""
             for c in vt_ig:
                if a==c[0]: 
-                   # se escribe en el archivo los ingredientes, unidades y montos
+                    '''se escribe en el archivo los ingredientes, unidades y montos'''
                     if str(c[1])=='jamon':
                            jamon=str(c[1])+'   '
                            resumen.write('\t'+jamon.capitalize()+'\t'+'\t'+'\t'+"||"+str(c[2])+'\t'+'\t'+'\t'+'\t'+"||"+str(c[3])+'\n')

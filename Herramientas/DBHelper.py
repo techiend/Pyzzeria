@@ -126,7 +126,7 @@ def lastID(table):
         last = last[0] + 1
     return last
 
-''' Metodo que inserta un Pedido ''''
+''' Metodo que inserta un Pedido '''
 def addPedido(nombreCliente, fechaPedido):
     c1 = CONNECTION.cursor()
     idPedido = lastID("pedido")
@@ -175,7 +175,7 @@ def addPizza(idPedido, tamano, ingredientes):
 CONNECTION = create_connection("pyzzeria.sql")
 create_tables()
 
-#Funcion que retorna las ventas totales de los tamaños
+'''Funcion que retorna las ventas totales de los tamaños'''
 def subt_tam():
     cur = CONNECTION.cursor()
     subtotal_tamano = cur.execute('''select distinct  p.fecha_pedido,(select sum(t.costo_tamano) from tamano t, pizza pi, pedido pe where pi.fk_tamano=t.id and pe.fecha_pedido =p.fecha_pedido  and pi.fk_pedido=pe.id )
@@ -183,7 +183,7 @@ def subt_tam():
                                       where  p.id= pi.fk_pedido and  t.id= pi.fk_tamano''').fetchall()
     return subtotal_tamano
 
-#Funcion que retorna las ventas totales de los ingredientes
+'''Funcion que retorna las ventas totales de los ingredientes'''
 def subt_ing():
     cur = CONNECTION.cursor()    
     subtotal_ingre = cur.execute('''  select distinct p.fecha_pedido, 
@@ -199,7 +199,7 @@ def subt_ing():
                                       and t_in.fk_ingrediente= pi_in.fk_ti_ingrediente and t_in.fk_tamano= pi_in.fk_ti_tamano_ingrediente''').fetchall()
     return subtotal_ingre
 
-#Funcion que retorna las ventas de  tamaños con sus cantidades y montos
+'''Funcion que retorna las ventas de  tamaños con sus cantidades y montos'''
 def vnt_piz():
     cur = CONNECTION.cursor()  
     vent_piz= cur.execute('''select  p.fecha_pedido, t.nombre_tamano,count(p.id) as vendidos,
@@ -209,7 +209,7 @@ def vnt_piz():
                                 group by p.fecha_pedido, t.nombre_tamano  ''').fetchall()
     return vent_piz
 
-#Funcion que retorna las ventas de los ingredientes con sus cantidades y montos
+'''Funcion que retorna las ventas de los ingredientes con sus cantidades y montos'''
 def vnt_ing():
     cur = CONNECTION.cursor()      
     vent_ing= cur.execute('''SELECT pedidos_ingredientes.fecha_pedido, pedidos_ingredientes.nombre_ingrediente,
