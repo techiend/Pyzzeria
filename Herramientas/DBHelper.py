@@ -126,7 +126,7 @@ def lastID(table):
         last = last[0] + 1
     return last
 
-''' Metodo que inserta un Pedido ''''
+''' Metodo que inserta un Pedido '''
 def addPedido(nombreCliente, fechaPedido):
     c1 = CONNECTION.cursor()
     idPedido = lastID("pedido")
