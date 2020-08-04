@@ -80,8 +80,8 @@
                                 {% for i in ing %}
                                 <div class="form-row">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="ingredients" value={{i.ingrediente_id}}>
-                                        <label class="custom-control-label" for="ingredientre1">{{i.nombre_ingrediente}}</label>
+                                        <input type="checkbox" class="custom-control-input" name="ingredients" value={{i.ingrediente_id}} id="ing{{i.ingrediente_id}}">
+                                        <label class="custom-control-label" for="ing{{i.ingrediente_id}}">{{i.nombre_ingrediente}}</label>
                                     </div>
                                 </div>
                                 {% endfor %}
