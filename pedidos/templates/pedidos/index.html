@@ -1,0 +1,65 @@
+
+  <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+     
+        <title>Pedidos | Pyzzeria</title>
+     
+       {% load bootstrap4 %}
+     
+       {# CSS Bootstrap #}
+       {% bootstrap_css %}
+    </head>
+    <body>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-5">La Pyzzeria</h2>
+            <div class="row">
+                
+
+                <div class="col-md-10 offset-md-1">
+                    <span class="anchor" id="formComplex"></span>
+                    <hr class="my-5">
+                    <h3>Comienza tu pedido . . .</h3>
+                    
+                    <form action="{% url 'pedidos:solicitud' %}" method="post">
+                    {% csrf_token %}
+                        <!-- form complex example -->
+                        <div class="form-row mt-4">
+                            <div class="col-sm-6 pb-3">
+                                <label for="exampleFirst">Nombres y Apelidos</label>
+                                <input type="text" class="form-control" name="name">
+                            </div>
+                            <!-- <div class="col-sm-3 pb-3">
+                                <label for="exampleSt">State</label>
+                                <select class="form-control" id="exampleSt">
+                                    <option>Pick a state</option>
+                                </select>
+                            </div> -->
+                            
+                        </div>
+                        <button type="submit" class="btn btn-info">Comenzar con tu pedido</button>
+                    </form>
+                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                </div>
+            </div>
+            <!--/row-->
+        <br><br><br><br>
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+    <hr>
+    <p class="text-center"><br>
+        <a class="small text-info d-inline-block">The Pyzzeria Company</a>
+    </p>
+</div>
+<!--/container-->
+            {% bootstrap_javascript jquery='full' %}
+    </body>
+  </html>
