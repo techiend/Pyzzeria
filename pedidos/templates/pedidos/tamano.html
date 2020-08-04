@@ -36,13 +36,13 @@
                         {% csrf_token %}
                         <!-- form complex example -->
                         <div class="form-row mt-4">
-                            <div class="col-md-6 pb-3">
+                            <div class="col-md-8 pb-3">
                                 <h5>Selecciona el tamaño de tu pizza</h5>
                                 <div class="form-group big">
                                     {% for t in tamano %}
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" id="tam{{t.tamano_id}}" name="selTamano" class="custom-control-input">
-                                        <label class="custom-control-label" for="tam{{t.tamano_id}}">{{t.nombre_tamano}}</label>
+                                        <label class="custom-control-label" for="tam{{t.tamano_id}}">{{t.nombre_tamano}} | {{t.costo_tamano}} UM</label>
                                       </div>
                                     <!-- <div class="form-check form-check-inline">
                                         <label class="form-check-label">
@@ -81,7 +81,7 @@
                                 <div class="form-row">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="ingredients" value={{i.ingrediente_id}} id="ing{{i.ingrediente_id}}">
-                                        <label class="custom-control-label" for="ing{{i.ingrediente_id}}">{{i.nombre_ingrediente}}</label>
+                                        <label class="custom-control-label" for="ing{{i.ingrediente_id}}">{{i.nombre_ingrediente}} | {{i.costo_ingrediente}} UM</label>
                                     </div>
                                 </div>
                                 {% endfor %}
@@ -126,8 +126,8 @@
     </div>
     <!--/row-->
     <hr>
-    <p class="text-center">The End.<br>
-        <a class="small text-info d-inline-block" href="https://www.codeply.com/bootstrap-4-examples">More Bootstrap 4 Examples</a>
+    <p class="text-center"><br>
+        <a class="small text-info d-inline-block" >The Pizzeria Company</a>
     </p>
     
 </div>
