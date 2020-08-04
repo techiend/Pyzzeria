@@ -1,3 +1,5 @@
 proyecto1/Herramientas/__pycache__/
 pyzzeria/__pycache__/
 pedidos/__pycache__/
+*.pyc
+*.pyc

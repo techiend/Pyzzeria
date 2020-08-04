@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:pedido_id>/', views.detail, name='detail'),
     path('lista/', views.lista, name='lista'),
+    path('solicitud/', views.solicitud, name='solicitud'),
 ]
