@@ -44,6 +44,9 @@ class Pedido(models.Model):
 
     def __str__(self):
         return self.nombre_cliente
+    
+    def cant_pizzas(self):
+        return len(self.pizza_set.all())
 
 class Pizza(models.Model):
     pizza_id = models.AutoField(primary_key=True)
