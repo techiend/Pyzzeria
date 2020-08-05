@@ -122,7 +122,7 @@ def pizza(request):
         })
 
 
-
+#
 def venta_ingrediente(request, pedido_id):
     pedidos = get_object_or_404(Pedido, pk=pedido_id),
     return render(request, 'pedidos/venta_ingrediente.html', {'pedido': pedidos}),
