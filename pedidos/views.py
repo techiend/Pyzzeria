@@ -18,12 +18,12 @@ def detail(request, pedido_id):
 
 def admin(request):
     # pedidos_list = Pedido.objects.order_by('fecha_pedido')[0:]
-    # pedidos_list = Pizza.objects.filter(pedido_id__isnull=False).
     pedidos = list()
-    pedidos_list = Pizza.objects.filter(pedido_id__isnull=False)
+    pedidos_list = Pedido.objects.order_by('fecha_pedido')[0:]
     for pl in pedidos_list:
-        p = Pedido.objects.get(pedido_id=pl.pedido_id.pedido_id)
-        pedidos.append(p)
+        pizzas = pl.pizza_set.all()
+        if pizzas:
+            pedidos.append(pl)
     return render(request, 'pedidos/administracion.html', {'pedidos_list': pedidos})
 
 def admin_detalle(request, pedido_id):

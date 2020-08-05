@@ -31,6 +31,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Información del cliente</th>
                             <th scope="col">Fecha del pedido</th>
+                            <th scope="col">Costo (UM)</th>
                             <th scope="col">Detalle</th>
                         </tr>
                         </thead>
@@ -40,6 +41,7 @@
                             <th scope="row">{{pedido.pedido_id}}</th>
                             <td>{{pedido.nombre_cliente}}</td>
                             <td>{{pedido.fecha_pedido}}</td>
+                            <td>{{pedido.costo_total}}</td>
                             <td><a href="{% url 'pedidos:detalle' pedido.pedido_id %}">Ver</a></td>
                         </tr>
                         </tbody>
