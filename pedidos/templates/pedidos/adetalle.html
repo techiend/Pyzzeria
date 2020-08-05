@@ -21,26 +21,67 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-center mb-5">HOLA PYZZERIA</h2>
+            <h1 class="text-center mb-5">Detalle del pedido</h1>
             <div>
-               <h5>HOLA</h5>
-               
 
-               <h1>{{ pedido.pedido_id }}</h1>
-               <h1>{{ pedido.nombre_cliente }}</h1>
-               <h1>{{ pedido.fecha_pedido }}</h1> 
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <label for="out">Número de pedido</label>
+                            <input class="form-control" type="text" placeholder="{{ pedido.pedido_id }}" readonly>
+                        </div>
+                    </div>
+                </form>
+
+               <form>
+                <div class="row">
+                    <div class="col">
+                        <label for="out">Cliente</label>
+                        <input class="form-control " type="text" placeholder="{{ pedido.nombre_cliente }}" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="out">Fecha compra</label>
+                        <input type="text" class="form-control" placeholder="{{ pedido.fecha_pedido }}" readonly>
+                    </div>
+                </div>
+               </form>
+               <br>
+               <h4>Información del pedido</h4>
                {% for pi in pedido.pizzas %} 
-                   {{ pi.pizza_id }}
-                   <br>
-                   {{ pi.tamano_id.get_name }}
-                   <br>
-                   {{ pi.tamano_id.get_costo }}
-                   <br>
+                    <form>
+
+                        <div class="row">
+                            <div class="col">
+                                <label for="out">Número de pizza</label>
+                                <input class="form-control " type="text" placeholder="{{ pi.pizza_id }}" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="out">Tamaño</label>
+                                <input type="text" class="form-control" placeholder="{{ pi.tamano_id.get_name }}" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="out">Costo</label>
+                                <input type="text" class="form-control" placeholder="{{ pi.tamano_id.get_costo }} UM" readonly>
+                            </div>
+                        </div>
+
+                    </form>
+                   <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Ingrediente</th>
+                        <th scope="col">Costo</th>
+                      </tr>
+                    </thead>
                    {% for i in pi.ingredientes %}
-                    <ul>
-                        <li>Ingrediente: {{i.ingrediente_id.get_name}} Costo: {{i.ingrediente_id.get_costo}}</li>
-                    </ul>
-                   {% endfor %}  
+                    <tbody>
+                        <tr>
+                        <td>{{i.ingrediente_id.get_name}}</td>
+                        <td>{{i.ingrediente_id.get_costo}}</td>
+                    </tr>
+                    </tbody>
+                   {% endfor %}
+                </table>
                {% endfor %}  
             </div>            
             <!--/row-->
