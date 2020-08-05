@@ -121,9 +121,31 @@ def pizza(request):
             'ing': Ingrediente.objects.all(),
         })
 
-def venta_ingrediente(request):
-    pedido = Pedido.objects.all()
-    return render(request, 'pedidos/venta_ingrediente.html')
+
+
+def venta_ingrediente(request, pedido_id):
+    pedidos = get_object_or_404(Pedido, pk=pedido_id),
+    return render(request, 'pedidos/venta_ingrediente.html', {'pedido': pedidos}),
+   
+    raw_query = '''
+        select pedidos_pedido.id, pedidos_ingrediente.nombre_ingrediente, pedidos_pedido.fecha_pedido, pedidos_pedido.nombre_cliente,
+        count(pedidos_pizza_ingrediente.id) cantidad,
+        sum(pedidos_ingrediente.costo_ingrediente) monto
+        from pedidos_ingrediente, pedidos_pedido, pedidos_pizza, pedidos_pizza_ingrediente
+        where pedidos_pizza.pedido_id_id= pedidos_pedido.pedido_id and
+        pedidos_pizza_ingrediente.pizza_id_id = pedidos_pizza.pizza_id and
+        pedidos_pizza_ingrediente.ingrediente_id_id = pedidos_ingrediente.ingrediente_id
+        group by pedidos_ingrediente.nombre_ingrediente, pedidos_pedido.fecha_pedido, pedidos_pedido.nombre_cliente
+        '''
     
+    results = Pedido.objects.raw(raw_query)
+    print (results.columns)
+
+
+
+    return render(request, 'pedidos/venta_ingrediente.html', {'resultado': results})
+
+
+
     
     
