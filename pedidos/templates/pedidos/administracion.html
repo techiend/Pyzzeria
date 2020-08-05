@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+     
+        <title>Administración | Pyzzeria</title>
+     
+            {# Cargamos la librería #}
+       {% load bootstrap4 %}
+     
+       {# CSS Bootstrap #}
+       {% bootstrap_css %}
+     
+     
+    </head>
+    <body>
+            
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-5">Administrando tu Pyzzeria</h2>
+            <div>
+                {% if pedidos_list %}
+                    <ul>
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Información del cliente</th>
+                            <th scope="col">Fecha del pedido</th>
+                            <th scope="col">Detalle</th>
+                        </tr>
+                        </thead>
+                        {% for pedido in pedidos_list %}
+                        <tbody>
+                        <tr>
+                            <th scope="row">{{pedido.pedido_id}}</th>
+                            <td>{{pedido.nombre_cliente}}</td>
+                            <td>{{pedido.fecha_pedido}}</td>
+                            <td><a href="{% url 'pedidos:detalle' pedido.pedido_id %}">Ver</a></td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    </ul>
+                {% else %}
+                    <p>No hay pedidos disponibles.</p>
+                {% endif %}
+            </div>            
+            <!--/row-->
+        <br><br><br><br>
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+    <hr>
+    <p class="text-center"><br>
+        <a class="small text-info d-inline-block" >The Pizzeria Company</a>
+    </p>
+    
+</div>
+<!--/container-->
+            {% bootstrap_javascript jquery='full' %}
+    </body>
+  </html>

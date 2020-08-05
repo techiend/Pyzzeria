@@ -6,19 +6,22 @@ class Tamano(models.Model):
     nombre_tamano = models.CharField(max_length=200)
     costo_tamano = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
-        return self.nombre_tamano
+        return self.nombre_tamano + " | " + str(self.costo_tamano)
 
 class Ingrediente(models.Model):
     ingrediente_id = models.AutoField(primary_key=True)
     nombre_ingrediente = models.CharField(max_length=200)
     costo_ingrediente = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     def __str__(self):
-        return self.nombre_ingrediente
+        return self.nombre_ingrediente + " | " + str(self.costo_ingrediente)
 
 class Pedido(models.Model):
     pedido_id = models.AutoField(primary_key=True)
     fecha_pedido = models.DateField('Fecha pedido')
     nombre_cliente = models.CharField(max_length=200)
+    def pizzas(self):
+        return self.pizza_set.all()
+
     def __str__(self):
         return self.nombre_cliente
 
@@ -26,6 +29,9 @@ class Pizza(models.Model):
     pizza_id = models.AutoField(primary_key=True)
     pedido_id = models.ForeignKey(Pedido, on_delete=models.DO_NOTHING)
     tamano_id = models.ForeignKey(Tamano, on_delete=models.DO_NOTHING)
+    
+    def ingredientes(self):
+        return self.pizza_ingrediente_set.all()
 
 class Pizza_Ingrediente(models.Model):
     id = models.AutoField(primary_key=True)

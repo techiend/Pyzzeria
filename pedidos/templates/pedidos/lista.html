@@ -1,9 +1,0 @@
-{% if pedidos_list %}
-    <ul>
-    {% for pedido in pedidos_list %}
-        <li><a href="{% url 'pedidos:detail' pedido.pedido_id %}">{{ pedido.nombre_cliente }} | {{ pedido.fecha_pedido}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No hay pedidos disponibles.</p>
-{% endif %}
