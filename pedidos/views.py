@@ -120,3 +120,10 @@ def pizza(request):
             'tamano': Tamano.objects.all(),
             'ing': Ingrediente.objects.all(),
         })
+
+def venta_ingrediente(request):
+    pedido = Pedido.objects.all()
+    return render(request, 'pedidos/venta_ingrediente.html')
+    
+    
+    
