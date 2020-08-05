@@ -6,4 +6,5 @@ urlpatterns = [
     path('<int:pedido_id>/', views.detail, name='detail'),
     path('lista/', views.lista, name='lista'),
     path('solicitud/', views.solicitud, name='solicitud'),
+    path('pizza/', views.pizza, name='pizza'),
 ]

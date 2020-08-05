@@ -30,9 +30,11 @@
                     <span class="anchor" id="formComplex"></span>
                     <hr class="my-5">
                     <h3>Comienza tu pedido . . .</h3>
+                    <h3>Pedido #{{pedido_id}}</h3>
                 
                 
-                    <form action="{% url 'pedidos:solicitud' %}" method="post">
+                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                    <form action="{% url 'pedidos:pizza' %}" method="post">
                         {% csrf_token %}
                         <!-- form complex example -->
                         <div class="form-row mt-4">
@@ -41,14 +43,9 @@
                                 <div class="form-group big">
                                     {% for t in tamano %}
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="tam{{t.tamano_id}}" name="selTamano" class="custom-control-input">
+                                        <input type="radio" id="tam{{t.tamano_id}}" name="selTamano" value={{t.tamano_id}} class="custom-control-input">
                                         <label class="custom-control-label" for="tam{{t.tamano_id}}">{{t.nombre_tamano}} | {{t.costo_tamano}} UM</label>
-                                      </div>
-                                    <!-- <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="selTamano" id="inlineRadio" value="{{t.tamano_id}}"> {{t.nombre_tamano}}
-                                        </label>
-                                    </div> -->
+                                    </div>
                                     {% endfor %}
                                     <!-- <div class="form-check form-check-inline">
                                         <label class="form-check-label">
@@ -110,11 +107,11 @@
                             
                             <div class="col-12">
                                 <input type="hidden" name="pedidoID" value="{{pedido_id}}">
-                                <button type="button" class="btn btn-info">Siguiente</button>
+                                <button type="submit" class="btn btn-info" name="action" value="add">Agregar y repetir</button>
+                                <button type="submit" class="btn btn-success" name="action" value="end">Agregar y finalizar</button>
                             </div>
                         </div>
                     </form>
-                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                 </div>
             </div>
             
