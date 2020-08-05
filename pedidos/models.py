@@ -36,6 +36,12 @@ class Pedido(models.Model):
     def pizzas(self):
         return self.pizza_set.all()
 
+    def costo_total(self):
+        cont = 0
+        for tot in self.pizza_set.all():
+            cont = cont + tot.costo()
+        return cont
+
     def __str__(self):
         return self.nombre_cliente
 
@@ -46,6 +52,12 @@ class Pizza(models.Model):
     
     def ingredientes(self):
         return self.pizza_ingrediente_set.all()
+
+    def costo(self):
+        cont = 0
+        for ing in self.pizza_ingrediente_set.all().filter()[0:]:
+            cont = cont + ing.ingrediente_id.get_costo()
+        return cont + self.tamano_id.get_costo()
 
 class Pizza_Ingrediente(models.Model):
     id = models.AutoField(primary_key=True)
