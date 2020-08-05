@@ -26,24 +26,22 @@
                <h5>HOLA</h5>
                
 
-
                <h1>{{ pedido.pedido_id }}</h1>
                <h1>{{ pedido.nombre_cliente }}</h1>
                <h1>{{ pedido.fecha_pedido }}</h1> 
                {% for pi in pedido.pizzas %} 
                    {{ pi.pizza_id }}
                    <br>
-                   {{ pi.tamano_id }}
+                   {{ pi.tamano_id.get_name }}
+                   <br>
+                   {{ pi.tamano_id.get_costo }}
                    <br>
                    {% for i in pi.ingredientes %}
-                       {{i.ingrediente_id}}
-                       <br>
+                    <ul>
+                        <li>Ingrediente: {{i.ingrediente_id.get_name}} Costo: {{i.ingrediente_id.get_costo}}</li>
+                    </ul>
                    {% endfor %}  
                {% endfor %}  
-
-
-
-
             </div>            
             <!--/row-->
         <br><br><br><br>
