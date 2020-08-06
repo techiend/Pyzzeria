@@ -55,6 +55,8 @@ class Pizza(models.Model):
     
     def ingredientes(self):
         return self.pizza_ingrediente_set.all()
+    def cant_ingredientes(self):
+        return len(self.pizza_ingrediente_set.all())
 
     def costo(self):
         cont = 0
