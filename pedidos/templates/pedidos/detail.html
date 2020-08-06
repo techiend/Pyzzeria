@@ -74,22 +74,24 @@
                             </div>
                         </div>
                     </form>
-                   <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Ingrediente</th>
-                        <th scope="col">Costo</th>
-                      </tr>
-                    </thead>
-                   {% for i in pi.ingredientes %}
-                    <tbody>
-                        <tr>
-                        <td>{{i.ingrediente_id.get_name}}</td>
-                        <td>{{i.ingrediente_id.get_costo}}</td>
-                    </tr>
-                    </tbody>
-                   {% endfor %}
-                </table>
+                    {% if pi.cant_ingredientes > 0 %}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Ingrediente</th>
+                                <th scope="col">Costo</th>
+                            </tr>
+                            </thead>
+                        {% for i in pi.ingredientes %}
+                            <tbody>
+                                <tr>
+                                <td>{{i.ingrediente_id.get_name}}</td>
+                                <td>{{i.ingrediente_id.get_costo}}</td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                        </table>
+                    {% endif %}
                 <form>
                 <!-- Aqui esta el total por pizza -->
                     <div class="row">

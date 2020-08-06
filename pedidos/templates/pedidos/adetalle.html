@@ -69,23 +69,23 @@
                             <input type="text" class="form-control" placeholder="{{ pi.tamano_id.get_costo }} UM" readonly>
                         </div>
                     </div>
-                {% if pedidos.cant_pizzas > 0 %}
+                {% if pi.cant_ingredientes > 0 %}
                    <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Ingrediente</th>
-                        <th scope="col">Costo (UM)</th>
-                      </tr>
-                    </thead>
-                   {% for i in pi.ingredientes %}
-                    <tbody>
+                        <thead>
                         <tr>
-                        <td>{{i.ingrediente_id.get_name}}</td>
-                        <td>{{i.ingrediente_id.get_costo}}</td>
-                    </tr>
-                    </tbody>
-                   {% endfor %}
-                </table>
+                            <th scope="col">Ingrediente</th>
+                            <th scope="col">Costo (UM)</th>
+                        </tr>
+                        </thead>
+                    {% for i in pi.ingredientes %}
+                        <tbody>
+                            <tr>
+                            <td>{{i.ingrediente_id.get_name}}</td>
+                            <td>{{i.ingrediente_id.get_costo}}</td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                    </table>
                 {% endif %}
                 <!-- Aqui esta el total por pizza -->
                 <div class="row">
