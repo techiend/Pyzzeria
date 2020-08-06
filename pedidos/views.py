@@ -139,11 +139,24 @@ def venta_ingrediente(request):
         '''
     
     results = Pedido.objects.raw(raw_query)
-    print (results.columns)
-
-
-
     return render(request, 'pedidos/venta_ingrediente.html', {'resultado': results})
+
+def venta_tamano(request):
+
+   
+    raw_query = '''
+                select pedidos_pedido.pedido_id, 
+                pedidos_tamano.nombre_tamano, 
+                count(pedidos_pizza.tamano_id_id) Cantidad,
+                count(pedidos_pizza.tamano_id_id) * pedidos_tamano.costo_tamano Monto
+                from  pedidos_pedido , pedidos_pizza, pedidos_tamano 
+                where pedidos_pizza.pedido_id_id = pedidos_pedido.pedido_id and
+                pedidos_pizza.tamano_id_id = pedidos_tamano.tamano_id
+                group by pedidos_tamano.nombre_tamano
+        '''
+    
+    results = Pedido.objects.raw(raw_query)
+    return render(request, 'pedidos/venta_tamano.html', {'resultado': results})
 
 
 
