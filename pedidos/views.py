@@ -14,8 +14,8 @@ def lista(request):
 
 def detail(request, pedido_id):
     pedido = get_object_or_404(Pedido, pk=pedido_id)
-    return render(request, 'pedidos/detail.html', {'pedido': pedido})
-
+    return render(request, 'pedidos/detail.html', {'pedido': pedido})\
+        
 def admin(request):
     # pedidos_list = Pedido.objects.order_by('fecha_pedido')[0:]
     pedidos = list()
@@ -29,6 +29,32 @@ def admin(request):
 def admin_detalle(request, pedido_id):
     pedido = get_object_or_404(Pedido, pk=pedido_id)
     return render(request, 'pedidos/adetalle.html', {'pedido': pedido})
+
+def today(request):
+    if request.POST:
+        try:
+            fechita = request.POST['fecha']
+            if fechita == "":
+                fechita = timezone.now()
+        except:
+            fechita = timezone.now()
+        else:
+            pedidos = list()
+            pedidos_list = Pedido.objects.filter(fecha_pedido=fechita).all()
+            for pl in pedidos_list:
+                pizzas = pl.pizza_set.all()
+                if pizzas:
+                    pedidos.append(pl)
+            return render(request, 'pedidos/ventas_dia.html', {'pedidos_list':pedidos}) 
+    else:
+        fechita = timezone.now()
+        pedidos = list()
+        pedidos_list = Pedido.objects.filter(fecha_pedido=fechita).all()
+        for pl in pedidos_list:
+            pizzas = pl.pizza_set.all()
+            if pizzas:
+                pedidos.append(pl)
+        return render(request, 'pedidos/ventas_dia.html', {'pedidos_list':pedidos}) 
 
 def solicitud(request):
     try:
