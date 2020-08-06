@@ -12,5 +12,5 @@ urlpatterns = [
     path('administracion/ingrediente/', views.venta_ingrediente, name='venta_ingrediente'),
     path('administracion/tamano/', views.venta_tamano, name='venta_tamano'),
     path('administracion/cliente/', views.venta_cliente, name='venta_cliente'),
-    
+    path('administracion/hoy/', views.today, name='hoy'),
 ]

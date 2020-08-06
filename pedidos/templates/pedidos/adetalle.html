@@ -17,13 +17,23 @@
      
     </head>
     <body>
-            
+        <nav class="site-header py-1">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+              <a class="py-2" href="{% url 'pedidos:index' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+              </a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:index' %}">Home</a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:administracion' %}">Administrativo</a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:hoy' %}">Ventas por día</a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:venta_ingrediente' %}">Ventas por ingrediente</a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:venta_tamano' %}">Ventas por tamaño</a>
+            </div>
+          </nav>
 <div class="container py-5">
     <div class="row">
         <div class="col-md-12">
             <h1 class="text-center mb-5">Detalle del pedido</h1>
             <div>
-
                 <form>
                     <div class="row">
                         <div class="col">
@@ -32,8 +42,7 @@
                         </div>
                     </div>
                 </form>
-
-               <form>
+                <form>
                 <div class="row">
                     <div class="col">
                         <label for="out">Cliente</label>
@@ -47,25 +56,22 @@
                </form>
                <br>
                <h4>Información del pedido</h4>
-               {% for pi in pedido.pizzas %} 
-                    <form>
-
-                        <div class="row">
-                            <div class="col">
-                                <label for="out">Número de pizza</label>
-                                <input class="form-control " type="text" placeholder="{{ pi.pizza_id }}" readonly>
-                            </div>
-                            <div class="col">
-                                <label for="out">Tamaño</label>
-                                <input type="text" class="form-control" placeholder="{{ pi.tamano_id.get_name }}" readonly>
-                            </div>
-                            <div class="col">
-                                <label for="out">Costo</label>
-                                <input type="text" class="form-control" placeholder="{{ pi.tamano_id.get_costo }} UM" readonly>
-                            </div>
+               {% for pi in pedido.pizzas %}
+                    <div class="row">
+                        <div class="col">
+                            <label for="out">Número de pizza</label>
+                            <input class="form-control " type="text" placeholder="{{ pi.pizza_id }}" readonly>
                         </div>
-
-                    </form>
+                        <div class="col">
+                            <label for="out">Tamaño</label>
+                            <input type="text" class="form-control" placeholder="{{ pi.tamano_id.get_name }}" readonly>
+                        </div>
+                        <div class="col">
+                            <label for="out">Costo</label>
+                            <input type="text" class="form-control" placeholder="{{ pi.tamano_id.get_costo }} UM" readonly>
+                        </div>
+                    </div>
+                {% if pedidos.cant_pizzas > 0 %}
                    <table class="table">
                     <thead>
                       <tr>
@@ -82,7 +88,24 @@
                     </tbody>
                    {% endfor %}
                 </table>
-               {% endfor %}  
+                {% endif %}
+                <!-- Aqui esta el total por pizza -->
+                <div class="row">
+                    <div class="col">
+                        <label for="out">Total de la pizza</label>
+                        <input class="form-control is-valid" type="text" placeholder="{{ pi.costo }}  UM" readonly>
+                        <br>
+                    </div>
+                </div>
+               {% endfor %} 
+                   <!-- Aqui esta el total del pedido -->
+                   <div class="row">
+                    <div class="col">
+                        <br>
+                        <h5>Total a pagar</h5>
+                        <input class="form-control is-valid" type="text" placeholder="{{ pedido.costo_total }}  UM" readonly>
+                    </div>
+                </div>
             </div>            
             <!--/row-->
         <br><br><br><br>
@@ -94,7 +117,6 @@
     <p class="text-center"><br>
         <a class="small text-info d-inline-block" >The Pizzeria Company</a>
     </p>
-    
 </div>
 <!--/container-->
             {% bootstrap_javascript jquery='full' %}
