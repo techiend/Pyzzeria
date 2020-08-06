@@ -15,51 +15,60 @@
        {% bootstrap_css %}
     </head>
     <body>
-<div class="container py-5">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="text-center mb-5">La Pyzzeria</h2>
+        <nav class="site-header py-1">
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+              <a class="py-2" href="{% url 'pedidos:index' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+              </a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:index' %}">Home</a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:administracion' %}">Administrativo</a>
+              <a class="py-2 d-none d-md-inline-block" href="{% url 'pedidos:hoy' %}">Ventas por día</a>
+            </div>
+          </nav>
+        <div class="container py-5">
             <div class="row">
-                
+                <div class="col-md-12">
+                    <h2 class="text-center mb-5">La Pyzzeria</h2>
+                    <div class="row">
+                        
 
-                <div class="col-md-10 offset-md-1">
-                    <span class="anchor" id="formComplex"></span>
-                    <hr class="my-5">
-                    <h3>Comienza tu pedido . . .</h3>
-                    
-                    <form action="{% url 'pedidos:solicitud' %}" method="post">
-                    {% csrf_token %}
-                        <!-- form complex example -->
-                        <div class="form-row mt-4">
-                            <div class="col-sm-6 pb-3">
-                                <label for="exampleFirst">Nombres y Apelidos</label>
-                                <input type="text" class="form-control" name="name">
-                            </div>
-                            <!-- <div class="col-sm-3 pb-3">
-                                <label for="exampleSt">State</label>
-                                <select class="form-control" id="exampleSt">
-                                    <option>Pick a state</option>
-                                </select>
-                            </div> -->
+                        <div class="col-md-10 offset-md-1">
+                            <span class="anchor" id="formComplex"></span>
+                            <hr class="my-5">
+                            <h3>Comienza tu pedido . . .</h3>
                             
+                            <form action="{% url 'pedidos:solicitud' %}" method="post">
+                            {% csrf_token %}
+                                <!-- form complex example -->
+                                <div class="form-row mt-4">
+                                    <div class="col-sm-6 pb-3">
+                                        <label for="exampleFirst">Nombres y Apelidos</label>
+                                        <input type="text" class="form-control" name="name">
+                                    </div>
+                                    <!-- <div class="col-sm-3 pb-3">
+                                        <label for="exampleSt">State</label>
+                                        <select class="form-control" id="exampleSt">
+                                            <option>Pick a state</option>
+                                        </select>
+                                    </div> -->
+                                    
+                                </div>
+                                <button type="submit" class="btn btn-info">Comenzar con tu pedido</button>
+                            </form>
+                            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                         </div>
-                        <button type="submit" class="btn btn-info">Comenzar con tu pedido</button>
-                    </form>
-                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                    </div>
+                    <!--/row-->
+                <br><br><br><br>
                 </div>
+                <!--/col-->
             </div>
             <!--/row-->
-        <br><br><br><br>
+            <hr>
+            <p class="text-center"><br>
+                <a class="small text-info d-inline-block">The Pyzzeria Company</a>
+            </p>
         </div>
-        <!--/col-->
-    </div>
-    <!--/row-->
-    <hr>
-    <p class="text-center"><br>
-        <a class="small text-info d-inline-block">The Pyzzeria Company</a>
-    </p>
-</div>
-<!--/container-->
             {% bootstrap_javascript jquery='full' %}
     </body>
   </html>
