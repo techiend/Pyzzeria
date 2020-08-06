@@ -9,6 +9,6 @@ urlpatterns = [
     path('pizza/', views.pizza, name='pizza'),
     path('administracion/', views.admin, name='administracion'),
     path('administracion/detalle/<int:pedido_id>/', views.admin_detalle, name='detalle'),
-    path('administracion/ingrediente/<int:pedido_id>/', views.venta_ingrediente, name='venta_ingrediente'),
+    path('administracion/ingrediente/', views.venta_ingrediente, name='venta_ingrediente'),
     
 ]

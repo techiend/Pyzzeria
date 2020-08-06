@@ -123,19 +123,19 @@ def pizza(request):
 
 
 #
-def venta_ingrediente(request, pedido_id):
-    pedidos = get_object_or_404(Pedido, pk=pedido_id),
-    return render(request, 'pedidos/venta_ingrediente.html', {'pedido': pedidos}),
+def venta_ingrediente(request):
+
    
     raw_query = '''
-        select pedidos_pedido.id, pedidos_ingrediente.nombre_ingrediente, pedidos_pedido.fecha_pedido, pedidos_pedido.nombre_cliente,
-        count(pedidos_pizza_ingrediente.id) cantidad,
-        sum(pedidos_ingrediente.costo_ingrediente) monto
-        from pedidos_ingrediente, pedidos_pedido, pedidos_pizza, pedidos_pizza_ingrediente
-        where pedidos_pizza.pedido_id_id= pedidos_pedido.pedido_id and
-        pedidos_pizza_ingrediente.pizza_id_id = pedidos_pizza.pizza_id and
-        pedidos_pizza_ingrediente.ingrediente_id_id = pedidos_ingrediente.ingrediente_id
-        group by pedidos_ingrediente.nombre_ingrediente, pedidos_pedido.fecha_pedido, pedidos_pedido.nombre_cliente
+                select pedidos_pedido.pedido_id, 
+                pedidos_ingrediente.nombre_ingrediente, 
+                count(pedidos_ingrediente.ingrediente_id) Cantidad,
+                count(pedidos_ingrediente.ingrediente_id) * pedidos_ingrediente.costo_ingrediente Monto
+                from pedidos_ingrediente , pedidos_pedido , pedidos_pizza ,pedidos_pizza_ingrediente 
+                where pedidos_pizza.pedido_id_id = pedidos_pedido.pedido_id and
+                 pedidos_pizza_ingrediente.pizza_id_id = pedidos_pizza.pizza_id 
+                 and pedidos_pizza_ingrediente.ingrediente_id_id = pedidos_ingrediente.ingrediente_id
+                group by pedidos_ingrediente.nombre_ingrediente
         '''
     
     results = Pedido.objects.raw(raw_query)

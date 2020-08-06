@@ -33,7 +33,7 @@
                             <th scope="col">Fecha del pedido</th>
                             <th scope="col">Costo (UM)</th>
                             <th scope="col">Detalle</th>
-                            <th scope="col">Detalle Ingrediente</th>
+                            
                         </tr>
                         </thead>
                         {% for pedido in pedidos_list %}
@@ -44,7 +44,7 @@
                             <td>{{pedido.fecha_pedido}}</td>
                             <td>{{pedido.costo_total}}</td>
                             <td><a href="{% url 'pedidos:detalle' pedido.pedido_id %}">Ver</a></td>
-                            <td><a href="{% url 'pedidos:venta_ingrediente' pedido.pedido_id %}">Ver</a></td>
+                            
                         </tr>
                         </tbody>
                         {% endfor %}
